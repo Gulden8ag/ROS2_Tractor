@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="mi_robot">
+  <!-- One visible base link so RViz shows *something* -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0.1"/>
+      <geometry>
+        <box size="0.3 0.2 0.1"/> <!-- 30×20×10 cm -->
+      </geometry>
+      <material name="blue"><color rgba="0.1 0.3 0.9 1.0"/></material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.1"/>
+      <geometry><box size="0.3 0.2 0.1"/></geometry>
+    </collision>
+    <!-- inertial is optional for RViz-only; add later for physics -->
+  </link>
+</robot>
