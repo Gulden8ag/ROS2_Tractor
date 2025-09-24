@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import find_packages, setup
 import os
 from glob import glob
 
@@ -16,10 +16,17 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='Oliver Ochoa',
+    maintainer='oliver_ros2',
     maintainer_email='oliver.ochoa2@iberopuebla.mx',
-    description='Single-package robot with URDF + launch + RViz',
+    description='Single-package robot demo',
     license='MIT',
-    tests_require=['pytest'],
-    entry_points={'console_scripts': []},
+    extras_require={
+        'test': [
+            'pytest'
+        ],
+    },
+    entry_points={
+        'console_scripts': [
+        ],
+    },
 )

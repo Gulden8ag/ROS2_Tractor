@@ -5,15 +5,15 @@ import os
 import xacro
 
 def generate_launch_description():
-    pkg_share = get_package_share_directory('mi_robot')
-    urdf_path = os.path.join(pkg_share, 'urdf', 'robot.urdf.xacro')
+    pkg_share = get_package_share_directory('tractor_description')
+    urdf_path = os.path.join(pkg_share, 'urdf', 'tractor.urdf.xacro')
 
-    # Turn Xacro into a URDF string
+    # Convierte Xacro a string URDF
     robot_description_config = xacro.process_file(urdf_path).toxml()
 
     return LaunchDescription([
-        # Anchor the robot so RViz has a fixed frame:
-        # map -> base_link (no rotation)
+        # Opcional: ancla un frame fijo si en RViz usas "map" como Fixed Frame.
+        # Si tu Fixed Frame es 'base_link', puedes omitir este nodo.
         Node(
             package='tf2_ros',
             executable='static_transform_publisher',
