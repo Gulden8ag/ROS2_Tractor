@@ -1,0 +1,25 @@
+# colcon/ROS 2 build artifacts
+build/
+install/
+log/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# VS Code / CLion / IDE stuff
+.vscode/
+.idea/
+
+# macOS / Windows cruft
+.DS_Store
+Thumbs.db
+
+# CMake extras
+CMakeFiles/
+CMakeCache.txt
+cmake-build-*/
+compile_commands.json
+
+# Misc
+*.swp
