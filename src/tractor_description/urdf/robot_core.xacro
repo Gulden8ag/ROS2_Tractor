@@ -45,12 +45,19 @@ Regla de la mano derecha
       <material name="red"/>                  
       <origin xyz="0 0 ${r}" rpy="0 0 0"/>
     </visual>
+    <visual>
+      <geometry>
+        <box size="${0.425*L} ${0.6*T} ${0.5*r}"/>               
+      </geometry>                
+      <material name="red"/>                  
+      <origin xyz="${-0.2125*L} 0 ${1.5*r}" rpy="0 0 0"/>
+    </visual>
   </link>
  
   <link name="front_left_steer">
     <visual>
       <geometry>
-         <box size="${r*.4} ${w+0.01} ${r*.4}"/>              
+         <box size="${r*.4} ${w+0.01} ${r}"/>              
       </geometry>              
       <material name="green"/>                 
     </visual>
@@ -59,7 +66,7 @@ Regla de la mano derecha
   <link name="front_right_steer">
     <visual>
       <geometry>
-         <box size="${r*.4} ${w+0.01} ${r*.4}"/>                
+         <box size="${r*.4} ${w+0.01} ${r}"/>                
       </geometry>                
       <material name="green"/>                 
     </visual> 
@@ -70,8 +77,15 @@ Regla de la mano derecha
       <geometry>
          <cylinder radius="${r}" length="${w}"/>               
       </geometry>                
-      <material name="blue"/>                 
+      <material name="blue"/>  
+      <origin xyz="0 0 0" rpy="${-pi/2} 0 0"/>                  
     </visual> 
+    <visual>
+      <geometry>
+          <sphere radius="0.005"/>
+      </geometry>
+      <origin xyz="0 0 ${r}" rpy="0 0 0"/>
+    </visual>
   </link>
 
   <link name="front_right_wheel">
@@ -79,8 +93,15 @@ Regla de la mano derecha
       <geometry>
          <cylinder radius="${r}" length="${w}"/>               
       </geometry>                
-      <material name="blue"/>                 
-    </visual> 
+      <material name="blue"/>
+      <origin xyz="0 0 0" rpy="${-pi/2} 0 0"/>               
+    </visual>
+    <visual>
+      <geometry>
+          <sphere radius="0.005"/>
+      </geometry>
+      <origin xyz="0 0 ${r}" rpy="0 0 0"/>
+    </visual>
   </link>
 
   <link name="back_left_wheel">
@@ -88,8 +109,15 @@ Regla de la mano derecha
       <geometry>
          <cylinder radius="${r}" length="${w}"/>               
       </geometry>                
-      <material name="blue"/>                 
-    </visual> 
+      <material name="blue"/> 
+      <origin xyz="0 0 0" rpy="${-pi/2} 0 0"/>                   
+    </visual>
+    <visual>
+      <geometry>
+          <sphere radius="0.005"/>
+      </geometry>
+      <origin xyz="0 0 ${r}" rpy="0 0 0"/>
+    </visual>
   </link>
 
   <link name="back_right_wheel">
@@ -97,45 +125,60 @@ Regla de la mano derecha
       <geometry>
          <cylinder radius="${r}" length="${w}"/>               
       </geometry>                
-      <material name="blue"/>                 
+      <material name="blue"/> 
+      <origin xyz="0 0 0" rpy="${-pi/2} 0 0"/>                   
     </visual> 
+    <visual>
+      <geometry>
+          <sphere radius="0.005"/>
+      </geometry>
+      <origin xyz="0 0 ${r}" rpy="0 0 0"/>
+    </visual>
   </link>
 
   <!-- JOINTS DEL ROBOT-->
-  <joint name="joint_base_lsteer" type="fixed">
+  <joint name="joint_base_lsteer" type="revolute">
     <parent link="base_link"/>                   
     <child link="front_left_steer"/>
-    <origin xyz="${0.5*L} ${0.5*T} 0" rpy="0 0 0"/> 
+    <origin xyz="${0.5*L} ${0.5*T} ${r}" rpy="0 0 0"/> 
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.6" upper="0.6" effort="1" velocity="2.0"/>
   </joint>
 
-  <joint name="joint_base_rsteer" type="fixed">
+  <joint name="joint_base_rsteer" type="revolute">
     <parent link="base_link"/>                   
     <child link="front_right_steer"/>
-    <origin xyz="${0.5*L} ${-0.5*T} 0" rpy="0 0 0"/> 
+    <origin xyz="${0.5*L} ${-0.5*T} ${r}" rpy="0 0 0"/> 
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.6" upper="0.6" effort="1" velocity="2.0"/>
   </joint>
 
-  <joint name="joint_steer_lfwheel" type="fixed">
+  <joint name="joint_steer_lfwheel" type="continuous">
     <parent link="front_left_steer"/>                   
     <child link="front_left_wheel"/>
-    <origin xyz="0 0 0" rpy="${pi/2} 0 0"/> 
+    <origin xyz="0 0 0" rpy="0 0 0"/> 
+    <axis xyz="0 1 0"/>
   </joint>
 
-  <joint name="joint_steer_rfwheel" type="fixed">
+  <joint name="joint_steer_rfwheel" type="continuous">
     <parent link="front_right_steer"/>                   
     <child link="front_right_wheel"/>
-    <origin xyz="0 0 0" rpy="${pi/2} 0 0"/> 
+    <origin xyz="0 0 0" rpy="0 0 0"/> 
+    <axis xyz="0 1 0"/>
   </joint>
 
-  <joint name="joint_base_lbwheel" type="fixed">
+  <joint name="joint_base_lbwheel" type="continuous">
     <parent link="base_link"/>                   
     <child link="back_left_wheel"/>
-    <origin xyz="${-0.5*L} ${0.5*T} 0" rpy="${pi/2} 0 0"/> 
+    <origin xyz="${-0.5*L} ${0.5*T} ${r}" rpy="0 0 0"/> 
+    <axis xyz="0 1 0"/>
   </joint>
 
-  <joint name="joint_base_rbwheel" type="fixed">
+  <joint name="joint_base_rbwheel" type="continuous">
     <parent link="base_link"/>                   
     <child link="back_right_wheel"/>
-    <origin xyz="${-0.5*L} ${-0.5*T} 0" rpy="${pi/2} 0 0"/> 
+    <origin xyz="${-0.5*L} ${-0.5*T} ${r}" rpy="0 0 0"/> 
+    <axis xyz="0 1 0"/>
   </joint>
 
 </robot>
