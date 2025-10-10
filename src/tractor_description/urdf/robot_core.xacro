@@ -42,6 +42,8 @@ Regla de la mano derecha
   <xacro:property name="m_steer" value="0.015"/>  <!-- kg per steer -->
 
   <!-- LINKS DEL ROBOT-->
+  <link name="base_footprint"/>
+
   <link name="base_link">
     <visual>
       <geometry>
@@ -186,6 +188,15 @@ Regla de la mano derecha
   </link>
 
   <!-- JOINTS DEL ROBOT-->
+
+  <!-- 2) Fija base_footprint -> base_link -->
+  <joint name="base_footprint_to_base_link" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <!-- Si tu base_link ya está a z=0 en el suelo, deja en 0 -->
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
   <joint name="joint_base_lsteer" type="revolute">
     <parent link="base_link"/>                   
     <child link="front_left_steer"/>
