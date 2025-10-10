@@ -12,11 +12,12 @@ setup(
         ('share/' + package_name, ['package.xml']),
         ('share/' + package_name + '/launch', glob('launch/*.py')),
         ('share/' + package_name + '/config', glob('config/*')),
+        ('share/' + package_name + '/worlds', glob('worlds/*.sdf')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='Oliver Ochoa',
     maintainer_email='oliver.ochoa2@iberopuebla.mx',
     description='Bringup del tractor: orquestación de simulación/visualización.',
-    license='TODO',
+    license='MIT',
 )

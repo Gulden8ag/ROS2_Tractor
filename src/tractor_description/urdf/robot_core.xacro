@@ -30,11 +30,16 @@ Regla de la mano derecha
 -->
 
   <xacro:include filename="colors.xacro"/> <!-- Include Colors-->
+  <xacro:include filename="inertials.xacro"/> <!-- Include Inertia-->
   <xacro:property name="L" value="0.148" /><!-- WheelBase -->
   <xacro:property name="T" value="0.133" /><!-- Track -->
   <xacro:property name="r" value="0.0325" /><!-- WheelRadius -->
   <xacro:property name="w" value="0.025" /><!-- WheelWidth -->
   <xacro:property name="pi" value="3.14159"/>
+
+  <xacro:property name="m_base" value="0.40"/>   <!-- kg -->
+  <xacro:property name="m_wheel" value="0.03"/>  <!-- kg per wheel -->
+  <xacro:property name="m_steer" value="0.015"/>  <!-- kg per steer -->
 
   <!-- LINKS DEL ROBOT-->
   <link name="base_link">
@@ -52,6 +57,14 @@ Regla de la mano derecha
       <material name="red"/>                  
       <origin xyz="${-0.2125*L} 0 ${1.5*r}" rpy="0 0 0"/>
     </visual>
+
+    <xacro:inertial_box mass="${m_base}"
+                      x="${0.80*L}"
+                      y="${0.50*T}"
+                      z="${0.40*r}"
+                      origin_xyz="0 0 ${r}"
+                      origin_rpy="0 0 0"/>
+                      
   </link>
  
   <link name="front_left_steer">
@@ -61,6 +74,14 @@ Regla de la mano derecha
       </geometry>              
       <material name="green"/>                 
     </visual>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${m_steer}"/>
+      <inertia ixx="${(m_steer/12.0)*((w+0.01)*(w+0.01) + r*r)}"
+              iyy="${(m_steer/12.0)*(1.16*r*r)}"
+              izz="${(m_steer/12.0)*(0.16*r*r + (w+0.01)*(w+0.01))}"
+              ixy="0" ixz="0" iyz="0"/>
+    </inertial>
   </link>
 
   <link name="front_right_steer">
@@ -70,6 +91,14 @@ Regla de la mano derecha
       </geometry>                
       <material name="green"/>                 
     </visual> 
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${m_steer}"/>
+      <inertia ixx="${(m_steer/12.0)*((w+0.01)*(w+0.01) + r*r)}"
+              iyy="${(m_steer/12.0)*(1.16*r*r)}"
+              izz="${(m_steer/12.0)*(0.16*r*r + (w+0.01)*(w+0.01))}"
+              ixy="0" ixz="0" iyz="0"/>
+    </inertial>
   </link>
 
   <link name="front_left_wheel">
@@ -86,6 +115,11 @@ Regla de la mano derecha
       </geometry>
       <origin xyz="0 0 ${r}" rpy="0 0 0"/>
     </visual>
+    <xacro:inertial_cylinder mass="${m_wheel}"
+                         radius="${r}"
+                         length="${w}"
+                         origin_xyz="0 0 0"
+                         origin_rpy="${-pi/2} 0 0"/>
   </link>
 
   <link name="front_right_wheel">
@@ -102,6 +136,11 @@ Regla de la mano derecha
       </geometry>
       <origin xyz="0 0 ${r}" rpy="0 0 0"/>
     </visual>
+    <xacro:inertial_cylinder mass="${m_wheel}"
+                         radius="${r}"
+                         length="${w}"
+                         origin_xyz="0 0 0"
+                         origin_rpy="${-pi/2} 0 0"/>
   </link>
 
   <link name="back_left_wheel">
@@ -118,6 +157,11 @@ Regla de la mano derecha
       </geometry>
       <origin xyz="0 0 ${r}" rpy="0 0 0"/>
     </visual>
+    <xacro:inertial_cylinder mass="${m_wheel}"
+                         radius="${r}"
+                         length="${w}"
+                         origin_xyz="0 0 0"
+                         origin_rpy="${-pi/2} 0 0"/>
   </link>
 
   <link name="back_right_wheel">
@@ -134,6 +178,11 @@ Regla de la mano derecha
       </geometry>
       <origin xyz="0 0 ${r}" rpy="0 0 0"/>
     </visual>
+    <xacro:inertial_cylinder mass="${m_wheel}"
+                         radius="${r}"
+                         length="${w}"
+                         origin_xyz="0 0 0"
+                         origin_rpy="${-pi/2} 0 0"/>
   </link>
 
   <!-- JOINTS DEL ROBOT-->
@@ -143,6 +192,7 @@ Regla de la mano derecha
     <origin xyz="${0.5*L} ${0.5*T} ${r}" rpy="0 0 0"/> 
     <axis xyz="0 0 1"/>
     <limit lower="-0.6" upper="0.6" effort="1" velocity="2.0"/>
+    <dynamics damping="0.1" friction="0.02"/>
   </joint>
 
   <joint name="joint_base_rsteer" type="revolute">
@@ -151,6 +201,7 @@ Regla de la mano derecha
     <origin xyz="${0.5*L} ${-0.5*T} ${r}" rpy="0 0 0"/> 
     <axis xyz="0 0 1"/>
     <limit lower="-0.6" upper="0.6" effort="1" velocity="2.0"/>
+    <dynamics damping="0.1" friction="0.02"/>
   </joint>
 
   <joint name="joint_steer_lfwheel" type="continuous">
