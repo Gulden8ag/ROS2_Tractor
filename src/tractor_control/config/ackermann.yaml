@@ -1,0 +1,24 @@
+ackermann_steering_controller:
+  ros__parameters:
+    # NOMBRES DE JOINTS (orden: derecha, izquierda)
+    traction_joints_names: ["joint_base_rbwheel", "joint_base_lbwheel"]
+    steering_joints_names: ["joint_base_rsteer", "joint_base_lsteer"]
+
+    # Geometría (tus valores):
+    wheelbase: 0.148                # L [m]
+    traction_track_width: 0.133     # T [m]  (para Ackermann es la trocha relevante)
+    steering_track_width: 0.133     # si no se da, usa la de tracción (lo pongo igual)
+
+    # Ruedas (llena con tu valor real)
+    traction_wheels_radius: 0.03    # [m] (ejemplo, pon tu radio)
+
+    # Odómetro / frames (puedes ajustar luego)
+    base_frame_id: "base_link"
+    odom_frame_id: "odom"
+    enable_odom_tf: true
+
+    # Feedback: si pones true, espera estados de posición en tracción; con false, de velocidad.
+    position_feedback: false
+
+    # Seguridad: comando por tiempo (resetea si no llegan referencias)
+    reference_timeout: 1.0

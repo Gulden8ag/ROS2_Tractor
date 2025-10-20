@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!-- ros2_control: define un "sistema" simulado con 4 articulaciones actuadas -->
+<ros2_control name="GazeboSimSystem" type="system">
+  <hardware>
+    <!-- Backend simulado que usa Gazebo a través de gz_ros2_control -->
+    <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+  </hardware>
+
+  <!-- ======= Joints de TRACCIÓN (traseros) — interfaz de VELOCIDAD ======= -->
+  <joint name="joint_base_rbwheel">
+    <command_interface name="velocity"/>   <!-- mando en rad/s -->
+    <state_interface   name="velocity"/>   <!-- leo vel -->
+    <state_interface   name="position"/>   <!-- y/o posición acumulada -->
+  </joint>
+
+  <joint name="joint_base_lbwheel">
+    <command_interface name="velocity"/>
+    <state_interface   name="velocity"/>
+    <state_interface   name="position"/>
+  </joint>
+
+  <!-- ======= Joints de DIRECCIÓN (delanteros) — interfaz de POSICIÓN ======= -->
+  <joint name="joint_base_rsteer">
+    <command_interface name="position"/>   <!-- mando ángulo en rad -->
+    <state_interface   name="position"/>   <!-- leo ángulo -->
+  </joint>
+
+  <joint name="joint_base_lsteer">
+    <command_interface name="position"/>
+    <state_interface   name="position"/>
+  </joint>
+</ros2_control>
